@@ -1,0 +1,1 @@
+CREATE INDEX idindex on LCDisc.Users(username);
