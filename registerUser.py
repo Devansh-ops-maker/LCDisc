@@ -10,10 +10,16 @@ load_dotenv()
 
 length=int(os.getenv("RANDOM_STRING_LENGTH"))
 sleep_time=int(os.getenv("SLEEP_TIME1"))
-message="""Follow these steps to verify your LeetCode username
-           1) Go to your Leetcode profile and click on Edit Profile.
-           2) Change the ReadMe in General to {} within the given time limit of {} seconds.
-        """
+message = """```text
+Follow these steps to verify your LeetCode username.
+
+1. Go to your LeetCode profile and click Edit Profile.
+2. Change the "About Me" section to:
+
+{}
+
+Complete this within {} seconds.
+```"""
 async def register(ctx,username : str):
     author=str(ctx.author.id)
 
@@ -25,7 +31,7 @@ async def register(ctx,username : str):
 
     if check:
         user=check.username
-        await ctx.send(f"User is already verified and is registered with the username {user}")
+        await ctx.send(f"```text User is already verified and is registered with the username {user} ```")
         return 
     else:
         if await user_exists(username):
@@ -44,13 +50,13 @@ async def register(ctx,username : str):
 
                 session.execute(query2,(author,username))
 
-                await ctx.send("The Leetcode username is successfully verified.")
+                await ctx.send("``` text The Leetcode username is successfully verified. ```")
                 return
             else:
-                await ctx.send("The ReadMe does not match.Please try again.")
+                await ctx.send("``` text The ReadMe does not match.Please try again. ```")
                 return
         else:
-            await ctx.send("Wrong username entered.Please try again.")
+            await ctx.send("``` text Wrong username entered.Please try again. ```")
             return
 async def unregister(ctx,):
     author=str(ctx.author.id)
@@ -71,8 +77,8 @@ async def unregister(ctx,):
         session.execute(query2,(author,))
 
 
-        await ctx.send("User successfully unregistered")
+        await ctx.send("``` text User successfully unregistered. ```")
         return
     else:
-        await ctx.send("User is already unregistered")
+        await ctx.send("``` text User is already unregistered. ```")
         return

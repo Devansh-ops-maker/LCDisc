@@ -14,7 +14,7 @@ async def recommend(ctx, difficulty: str):
             ques = await get_problem("Hard")
 
         if ques is None:
-            await ctx.send("Couldn't fetch a problem right now — try again in a bit.")
+            await ctx.send("``` text Couldn't fetch a problem right now — try again in a bit.```")
             return
 
         await ctx.send(
@@ -22,5 +22,5 @@ async def recommend(ctx, difficulty: str):
         )
         return
     else:
-        await ctx.send("Invalid difficulty level entered.")
+        await ctx.send("``` text Invalid difficulty level entered.```")
         return

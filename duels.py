@@ -15,26 +15,57 @@ q3score=int(os.getenv("Q3score"))
 
 
 
-message1="A duel match has been started between {} vs {}. The match will begin shortly.\n {}"
+message1 = """```text
+Team Duel
 
-message2 = """
-                TEAM DUEL 
+{} vs {}
 
-{}  vs  {}
+The duel will begin shortly.
 
-Time Limit: {}
+{}
+```"""
 
-Problems:
+message2 = """```text
+TEAM DUEL
+=========
+
+{} vs {}
+
+Time Limit : {} minutes
+
+Problems
+--------
 Q1. {}   (3 points)
 Q2. {}   (5 points)
 Q3. {}   (7 points)
-\n
+
 {}
-"""
+```"""
 
-message3="Ques{} has been solved by the opponent team, it is no longer available for score.\n {}"
+message3 = """```text
+Problem Update
+==============
 
-message4="The duel has been completed.\n\n The score of {} was {} vs The score of the {} was {}.\n\n.The winner of the duel is {}.\n {}"
+Q{} has been solved by the opposing team.
+
+This problem is no longer available for points.
+
+{}
+```"""
+
+message4 = """```text
+Duel Completed
+==============
+
+{} : {} points
+{} : {} points
+
+Winner
+------
+{}
+
+{}
+```"""
 
 async def duels(ctx,TeamName1: str,TeamName2: str):
 
@@ -52,7 +83,7 @@ async def duels(ctx,TeamName1: str,TeamName2: str):
 
     if check1 and check2:
         if TeamName1==TeamName2:
-            await ctx.send("Teams can not duel with themselved.")
+            await ctx.send("``` text Teams can not duel with themselved.```")
             return
         else:
             T1size=check1.TeamSize
@@ -118,7 +149,7 @@ async def duels(ctx,TeamName1: str,TeamName2: str):
             await ctx.send(message4.format(TeamName1,T1score,TeamName2,T2score,winner,mentions))
             return
     else:
-        print("Team does not exists.Can not start a duel.")
+        print("``` text Team does not exists.Can not start a duel.```")
         return 
 async def monitorduel(T1dis,T2dis,T1leet,T2leet,ques1,ques2,ques3,ctx):
 

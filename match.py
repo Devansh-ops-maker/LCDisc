@@ -13,21 +13,26 @@ q4score=int(os.getenv("Q4match"))
 q5score=int(os.getenv("Q5match"))
 MatchTime=int(os.getenv("MATCH_TIME"))
 
-mesmatch = """
-                MATCH STARTED 
+mesmatch = """```text
+MATCH STARTED
+=============
 
-Match: {}
+Match
+-----
+{}
 
-Time Limit: {} hours
+Time Limit
+----------
+{} hours
 
-Problems:
+Problems
+--------
 Q1. {}   (3 points)
 Q2. {}   (5 points)
 Q3. {}   (7 points)
 Q4. {}   (9 points)
 Q5. {}   (11 points)
-
-"""
+```"""
 
 async def createMatch(ctx,Matchname: str):
     if ctx.author.guild_permissions.administrator:
@@ -39,7 +44,7 @@ async def createMatch(ctx,Matchname: str):
         check=session.execute(query1,(Matchname,)).one()
 
         if check:
-            await ctx.send("A match with this match name already exists.Please try to create another match.")
+            await ctx.send("``` text A match with this match name already exists.Please try to create another match.```")
             return 
         else:
             query2="""Insert INTO LCDisc.Matches
@@ -49,10 +54,10 @@ async def createMatch(ctx,Matchname: str):
 
             session.execute(query2,(Matchname,))
 
-            await ctx.send(f"Match {Matchname} has been successfully created.")
+            await ctx.send(f"``` text Match {Matchname} has been successfully created.```")
             return
     else:
-        await ctx.send("Only admin is allowed to create new messages.")
+        await ctx.send("``` text Only admin is allowed to create new messages.```")
         return
 async def registerMatch(ctx,MatchName: str,TeamName: str):
 
@@ -72,14 +77,14 @@ async def registerMatch(ctx,MatchName: str,TeamName: str):
         if check2:
             matchStarted=check.started
             if matchStarted:
-                await ctx.send(f"The match {MatchName} has already started.")
+                await ctx.send(f"``` text The match {MatchName} has already started.```")
                 return
             else:
                 registeredTeams=check.registeredTeams
                 if registeredTeams is None:
                     registeredTeams=set()
                 if TeamName in registeredTeams:
-                    await ctx.send(f"The team {TeamName} has already registered for the match {MatchName}")
+                    await ctx.send(f"``` text The team {TeamName} has already registered for the match {MatchName}```")
                     return 
                 else:
                     registeredTeams.add(TeamName)
@@ -91,13 +96,13 @@ async def registerMatch(ctx,MatchName: str,TeamName: str):
 
                     session.execute(query3,(registeredTeams,MatchName,))
 
-                    await ctx.send(f"Registration of the team {TeamName} is successful for the match {MatchName}")
+                    await ctx.send(f"``` text Registration of the team {TeamName} is successful for the match {MatchName}```")
                     return
         else:
-            await ctx.send(f"A Team of {TeamName} is not available.")
+            await ctx.send(f"``` text A Team of {TeamName} is not available.```")
             return 
     else:
-        await ctx.send(f"A Match of {MatchName} is not available.")
+        await ctx.send(f"``` text A Match of {MatchName} is not available.```")
         return
 async def startMatch(ctx,MatchName: str):
 
@@ -112,12 +117,12 @@ async def startMatch(ctx,MatchName: str):
         started=check.started
 
         if started:
-            await ctx.send(f"The match {MatchName} has already started.")
+            await ctx.send(f"``` text The match {MatchName} has already started.```")
             return
         else:
             if registeredTeams  and len(registeredTeams)>=2:
-                await ctx.send(f"Match {MatchName} is about to start!")
-                await ctx.send(f"{len(registeredTeams)} teams have registered for the match!")
+                await ctx.send(f"``` text Match {MatchName} is about to start!```")
+                await ctx.send(f"``` text {len(registeredTeams)} teams have registered for the match! ```")
                 message=f"The registered teams for {MatchName} are: "
                 teamindx=1
                 for team in registeredTeams:
@@ -161,7 +166,7 @@ async def startMatch(ctx,MatchName: str):
 
                 teams=await calculatePoints(registeredTeams,questions,question_scores)
 
-                await ctx.send("The contest is over now.")
+                await ctx.send("``` text The contest is over now.```")
 
                 endmsg="The winning order of teams is: "
 
@@ -171,10 +176,10 @@ async def startMatch(ctx,MatchName: str):
                 await ctx.send(endmsg)
                 return
             else:
-                await ctx.send(f"Atleast two teams are required for the {MatchName} to start.")
+                await ctx.send(f"``` text Atleast two teams are required for the {MatchName} to start.```")
                 return
     else:
-        await ctx.send("No match by this name exists.")
+        await ctx.send("``` text No match by this name exists.```")
         return
 async def calculatePoints(registeredTeams,questions,question_scores):
 

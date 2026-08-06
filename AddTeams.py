@@ -21,7 +21,7 @@ async def createTeam(ctx,TeamName: str):
         TeamLeader=check.TeamLeader
         TeamSize=check.TeamSize
 
-        await ctx.send(f"This Team already exist with {TeamLeader} as TeamLeader and the TeamSize is {TeamSize}")
+        await ctx.send(f"```text This Team already exist with {TeamLeader} as TeamLeader and the TeamSize is {TeamSize}```")
         return
     else:
 
@@ -41,10 +41,10 @@ async def createTeam(ctx,TeamName: str):
 
             session.execute(query3,(TeamName,LeadUsername,1))
 
-            await ctx.send(f"Team  {TeamName} sucessfully created with {LeadUsername} as the TeamLeader.")
+            await ctx.send(f"``` text Team  {TeamName} sucessfully created with {LeadUsername} as the TeamLeader.```")
             return 
         else:
-            await ctx.send("The username of the TeamLeader is not verified.Please first verify it.")
+            await ctx.send("``` text The username of the TeamLeader is not verified.Please first verify it.```")
             return
 async def addMember(ctx,TeamName: str,NewMem :Member):
     author=str(ctx.author.id)
@@ -68,11 +68,11 @@ async def addMember(ctx,TeamName: str,NewMem :Member):
             AuthorUsername=check2.username
 
             if LeadUsername!=AuthorUsername:
-                await ctx.send(f"Only the TeamLeader {LeadUsername} is allowed to add members to the team.")
+                await ctx.send(f"``` text Only the TeamLeader {LeadUsername} is allowed to add members to the team.```")
                 return
             else:
                 if TeamSize==MaxTeamSize:
-                    await ctx.send("Team Size is already full, no more members can be added to the team.")
+                    await ctx.send("``` text Team Size is already full, no more members can be added to the team.```")
                     return
                 else:
                     query3="""SELECT username FROM LCDisc.Users
@@ -94,7 +94,7 @@ async def addMember(ctx,TeamName: str,NewMem :Member):
                         await view.wait()
 
                         if view.accepted is None:
-                            await ctx.send("Invitation timed out")
+                            await ctx.send("``` text Invitation timed out```")
                             return
 
                         if view.accepted:
@@ -106,16 +106,16 @@ async def addMember(ctx,TeamName: str,NewMem :Member):
                             
                             session.execute(query4,(TeamSize+1,MemUsername,TeamName,))
                             
-                            await ctx.send("New member successfully added to the team.")
+                            await ctx.send("``` text New member successfully added to the team.```")
                             return 
                         else:
-                            await ctx.send("The invitation has been declined.")
+                            await ctx.send("``` text The invitation has been declined.```")
                             return 
                     else:
-                            await ctx.send(f"The username of the new member {NewMem} is not verified")
+                            await ctx.send(f"``` text The username of the new member {NewMem} is not verified```")
                             return
         else:
-            await ctx.send(f"The username is not verified for this id {author}.Please first verify it.")
+            await ctx.send(f"``` text The username is not verified for this id {author}.Please first verify it.```")
             return
     else:
         await ctx.send("This team does not exist")
@@ -166,7 +166,7 @@ async def removeMember(ctx,TeamName: str,RemMem: Member):
                     MemUsername=check4.username
 
                     if LeaderUsername==MemUsername:
-                        await ctx.send("Team Leader can not be removed from the team")
+                        await ctx.send("``` text Team Leader can not be removed from the team.```")
                         return
                     else:
                         if MemUsername in mems:
@@ -188,22 +188,22 @@ async def removeMember(ctx,TeamName: str,RemMem: Member):
 
                             session.execute(query6,(None,len(mems)+1,TeamName,))
 
-                            await ctx.send("User is successfully removed from the Team")
+                            await ctx.send("``` text User is successfully removed from the Team.```")
                             return
                         else:
-                            await ctx.send(f"The member {RemMem.name} is not present in the Team {TeamName}")
+                            await ctx.send(f"``` text The member {RemMem.name} is not present in the Team {TeamName}```")
                             return
                 else:
-                    await ctx.send(f"The member {RemMem.name} to be removed is not verified")
+                    await ctx.send(f"``` text The member {RemMem.name} to be removed is not verified. ```")
                     return
             else:
-                await ctx.send(f"The user {author} is not allowed to remove members from the team {TeamName}")
+                await ctx.send(f"``` text The user {author} is not allowed to remove members from the team {TeamName}```")
                 return
         else:
-            await ctx.send(f"The username of the id {author} is not verified.Please verify it firs.")
+            await ctx.send(f"``` text The username of the id {author} is not verified.Please verify it firs.```")
             return
     else:
-        await ctx.send("The team does not exist.")
+        await ctx.send("``` text The team does not exist.```")
         return
 
 
