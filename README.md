@@ -26,7 +26,7 @@ LCDisc is a Discord bot built for the competitive programming community, bringin
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/LCDisc.git
+git clone https://github.com/Devansh-ops-maker/LCDisc.git
 cd LCDisc
 ```
 
